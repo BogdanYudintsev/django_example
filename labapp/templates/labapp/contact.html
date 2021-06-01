@@ -1,0 +1,24 @@
+{% extends "labapp/layout.html" %}
+{% load static %}
+
+{% block content %}
+
+    <aside>
+        <h2>YOUR REQUEST STATUS</h2>
+        <p id="statusfield"><img src="{% static '/labapp/images/bg1.png' %}" width="230" height="180" alt="Our Offices"></p>
+    </aside>
+    <section>
+        <form id="contactform">
+            {% csrf_token %}
+            <fieldset>
+                <legend>CONTACT US</legend>
+                {{ cotact_req_form.as_p }}
+            </fieldset>
+            <p><input type="submit" id="sendbtn" value="Отправить"></p>
+        </form>
+    </section>
+    <script type="text/javascript" src="{% static '/labapp/javascripts/formsend.js' %}"></script>
+
+{% include "labapp/footer.html" %}
+
+{% endblock %}
