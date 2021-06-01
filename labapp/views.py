@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 import json
+import datetime
 
 # Структура основного навигационнго меню веб-приложения,
 # оформленное в виде массива dict объектов
@@ -55,8 +56,18 @@ def contact(request):
     # если используется http-метод GET
     if request.method == 'GET':
         cotact_req_form = ContactRequestForm()
+        request.session['user'] = 'test_user'
+        response = render(request, 'labapp/contact.html', { 'title': 'Whitesquare', 'pname':'CONTACT', 'navmenu': navmenu, 'cotact_req_form': cotact_req_form })
+        response.set_cookie(
+            'AuthToken',
+            request.session['user'],
+            max_age=None,
+            domain=None,
+            secure=False,
+        )
         # рендеринг страницы contact.html
-        return render(request, 'labapp/contact.html', { 'title': 'Whitesquare', 'pname':'CONTACT', 'navmenu': navmenu, 'cotact_req_form': cotact_req_form })
+        #return render(request, 'labapp/contact.html', { 'title': 'Whitesquare', 'pname':'CONTACT', 'navmenu': navmenu, 'cotact_req_form': cotact_req_form })
+        return response
     # если используется http-метод GET
     elif request.method == 'POST':
         # получаем json-данные из запроса (из формы на странице contact)
